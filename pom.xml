@@ -15,6 +15,14 @@
 
 	<name>db-demo</name>
 	<url>http://maven.apache.org</url>
+	
+	<developers>
+		<developer>
+			<name>Ray</name>
+			<url>git@gitee.com:raymind/mydemo.git</url>
+			<email>longsail@hotmail.com</email>
+		</developer>
+	</developers>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
