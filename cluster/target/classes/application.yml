@@ -1,0 +1,11 @@
+server:
+  port: 8700
+spring:
+  application:
+    name: netty-cluster
+  profiles:
+    active: 'dev'
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: true
