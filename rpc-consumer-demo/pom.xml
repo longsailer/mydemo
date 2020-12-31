@@ -8,8 +8,8 @@
 		<artifactId>my-demo</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>rpc-provider</artifactId>
-	<name>rpc-provider</name>
+	<artifactId>rpc-consumer-demo</artifactId>
+	<name>rpc-consumer-demo</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -19,16 +19,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>io.netty</groupId>
-			<artifactId>netty-all</artifactId>
-		</dependency>
-
+		
 		<dependency>
 			<groupId>org.ray</groupId>
-			<artifactId>rpc-core</artifactId>
+			<artifactId>rpc-consumer-spring-boot-starter</artifactId>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

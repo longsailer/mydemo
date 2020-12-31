@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -15,7 +16,7 @@
 
 	<name>db-demo</name>
 	<url>http://maven.apache.org</url>
-	
+
 	<developers>
 		<developer>
 			<name>Ray</name>
@@ -34,11 +35,15 @@
 		<module>leveldb</module>
 		<module>netty</module>
 		<module>gateway</module>
-    <module>cluster</module>
-    <module>rpc-server</module>
-    <module>rpc-provider</module>
-    <module>rpc-consumer</module>
-  </modules>
+		<module>cluster</module>
+		<module>rpc-server</module>
+		<module>rpc-provider</module>
+		<module>rpc-consumer-spring-boot-starter</module>
+		<module>rpc-core</module>
+		<module>rpc-consumer-demo</module>
+		<module>rpc-provider-demo</module>
+		<module>rpc-server-demo</module>
+	</modules>
 
 	<dependencyManagement>
 		<dependencies>
@@ -51,6 +56,33 @@
 				<groupId>io.netty</groupId>
 				<artifactId>netty-all</artifactId>
 				<version>4.1.55.Final</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.thrift</groupId>
+				<artifactId>libthrift</artifactId>
+				<version>0.13.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.ray</groupId>
+				<artifactId>rpc-core</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.ray</groupId>
+				<artifactId>rpc-consumer-spring-boot-starter</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.ray</groupId>
+				<artifactId>rpc-provider</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.ray</groupId>
+				<artifactId>rpc-server</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -78,6 +110,19 @@
 			</properties>
 		</profile>
 	</profiles>
+	
+	<distributionManagement>
+		<snapshotRepository>
+			<id>zn-snapshots</id>
+			<name>ZN Snapshots</name>
+			<url>http://nexus.agrisaas.cn/repository/zn-snapshot/</url>
+		</snapshotRepository>
+		<repository>
+			<id>zn-releases</id>
+			<name>ZN Release</name>
+			<url>http://nexus.agrisaas.cn/repository/zn-release/</url>
+		</repository>
+	</distributionManagement>
 
 	<build>
 		<plugins>
