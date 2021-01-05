@@ -2,14 +2,17 @@ package org.ray.rpc.consumer.proxy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.rmi.ServerException;
 import java.util.UUID;
 
-import org.ray.rpc.client.RpcClient;
 import org.ray.rpc.consumer.annotation.Consumer;
 import org.ray.rpc.core.RpcTypeReference;
 import org.ray.rpc.core.bean.RpcRequestBean;
 import org.ray.rpc.core.bean.RpcResponseBean;
-import org.ray.rpc.tcp.RpcResponse;
+import org.ray.rpc.core.client.RpcClient;
+import org.ray.rpc.core.tcp.RpcResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 /**
@@ -20,6 +23,7 @@ import org.springframework.util.StringUtils;
  * @date: 2020年12月28日
  */
 public class ConsumerInvocationHandler implements InvocationHandler {
+	private Logger log = LoggerFactory.getLogger(ConsumerInvocationHandler.class);
 	private RpcClient client;
 	public ConsumerInvocationHandler(RpcClient client){
 		this.client = client;
@@ -38,7 +42,16 @@ public class ConsumerInvocationHandler implements InvocationHandler {
 		request.setMethodName(methodName);
 		request.setParamValues(args);
 		request.setRequestId(UUID.randomUUID().toString());
+		long begin = System.currentTimeMillis();
 		RpcResponse<?> response = client.call(request, new RpcTypeReference<RpcResponseBean<Object>>(method.getGenericReturnType()));
+		long end = System.currentTimeMillis();
+		log.debug("Call provider total spend time : {} ms", end-begin);
+		if(response == null){
+			throw new NullPointerException("Response is null.");
+		}
+		if(response.getStatus() != 200){
+			throw new ServerException(response.getMsg());
+		}
 		return response.getData();
 	}
 }

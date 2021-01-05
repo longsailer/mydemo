@@ -1,6 +1,6 @@
 package org.ray.rpc.core.bean;
 
-import org.ray.rpc.tcp.RpcResponse;
+import org.ray.rpc.core.tcp.RpcResponse;
 
 /**
  * RPCResponse.java

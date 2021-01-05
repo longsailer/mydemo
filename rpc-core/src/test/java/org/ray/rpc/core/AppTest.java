@@ -1,7 +1,7 @@
 package org.ray.rpc.core;
 
 import org.ray.rpc.core.bean.RpcResponseBean;
-import org.ray.rpc.tcp.RpcResponse;
+import org.ray.rpc.core.tcp.RpcResponse;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

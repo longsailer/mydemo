@@ -1,7 +1,7 @@
 package org.ray.rpc.consumer;
 
-import org.ray.rpc.client.RpcClient;
-import org.ray.rpc.client.TcpRpcClient;
+import org.ray.rpc.core.client.RpcClient;
+import org.ray.rpc.core.client.TcpRpcClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;

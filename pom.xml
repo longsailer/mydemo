@@ -36,8 +36,8 @@
 		<module>netty</module>
 		<module>gateway</module>
 		<module>cluster</module>
-		<module>rpc-server</module>
-		<module>rpc-provider</module>
+		<module>rpc-server-spring-boot-starter</module>
+		<module>rpc-provider-spring-boot-starter</module>
 		<module>rpc-consumer-spring-boot-starter</module>
 		<module>rpc-core</module>
 		<module>rpc-consumer-demo</module>
@@ -76,12 +76,12 @@
 			</dependency>
 			<dependency>
 				<groupId>org.ray</groupId>
-				<artifactId>rpc-provider</artifactId>
+				<artifactId>rpc-provider-spring-boot-starter</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>org.ray</groupId>
-				<artifactId>rpc-server</artifactId>
+				<artifactId>rpc-server-spring-boot-starter</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 		</dependencies>

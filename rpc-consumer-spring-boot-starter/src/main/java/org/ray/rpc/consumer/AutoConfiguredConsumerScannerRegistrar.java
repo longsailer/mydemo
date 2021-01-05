@@ -3,9 +3,9 @@ package org.ray.rpc.consumer;
 import java.lang.reflect.Field;
 import java.util.Set;
 
-import org.ray.rpc.client.RpcClient;
 import org.ray.rpc.consumer.annotation.Consumer;
 import org.ray.rpc.consumer.proxy.ConsumerProxyFactoryBean;
+import org.ray.rpc.core.client.RpcClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;

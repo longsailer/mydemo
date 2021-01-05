@@ -2,7 +2,7 @@ package org.ray.rpc.consumer.proxy;
 
 import java.lang.reflect.Proxy;
 
-import org.ray.rpc.client.RpcClient;
+import org.ray.rpc.core.client.RpcClient;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 
