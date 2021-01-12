@@ -71,7 +71,8 @@ public abstract class BaseTask implements Runnable {
 	}
 	
 	public void close(){
-		ctx.close();
+		if(ctx != null)
+			ctx.close();
 	}
 }
 

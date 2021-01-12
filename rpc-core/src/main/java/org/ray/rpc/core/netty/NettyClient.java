@@ -25,6 +25,7 @@ public class NettyClient {
     private long id;
     private Bootstrap b;
     private EventLoopGroup group;
+    private Object lock = new Object();
     
     public NettyClient(long id, String host, int port) {
         this.host = host;
@@ -74,15 +75,17 @@ public class NettyClient {
      */
     public Bootstrap bootstrap(InetSocketAddress address, ChannelInitializer<SocketChannel> channelInitializer) throws IllegalStateException, InterruptedException {
         try {
-        	if(this.b == null){
-        		group = new NioEventLoopGroup();
-        		b = new Bootstrap();                //1
-        		b.group(group)                                //2
-        		.channel(NioSocketChannel.class)            //3
-        		.remoteAddress(address)    //4
-        		.option(ChannelOption.TCP_NODELAY, true)
-        		.handler(channelInitializer);
-        	}
+        	synchronized (lock) {
+        		if(this.b == null){
+            		group = new NioEventLoopGroup();
+            		b = new Bootstrap();                //1
+            		b.group(group)                                //2
+            		.channel(NioSocketChannel.class)            //3
+            		.remoteAddress(address)    //4
+            		.option(ChannelOption.TCP_NODELAY, true)
+            		.handler(channelInitializer);
+            	}
+			}
         	if(!isSame(address.getHostString(), address.getPort())){
         		b.remoteAddress(address);
         	}

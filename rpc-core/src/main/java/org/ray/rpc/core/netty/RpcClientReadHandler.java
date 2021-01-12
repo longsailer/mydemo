@@ -55,6 +55,7 @@ public class RpcClientReadHandler<T> extends ChannelInboundHandlerAdapter{
 		} catch (JsonProcessingException e) {
 			log.error("结果格式解析错误", e);
 		} finally {
+			in.release();
 			this.end();
 		}
     }
@@ -83,7 +84,8 @@ public class RpcClientReadHandler<T> extends ChannelInboundHandlerAdapter{
     }
     
     public void close(){
-    	this.ctx.close();
+    	if(this.ctx != null)
+    		this.ctx.close();
     }
 
 	public ChannelHandlerContext getCtx() {

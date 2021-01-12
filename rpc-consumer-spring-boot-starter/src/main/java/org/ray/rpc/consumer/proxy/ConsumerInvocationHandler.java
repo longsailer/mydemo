@@ -29,29 +29,35 @@ public class ConsumerInvocationHandler implements InvocationHandler {
 		this.client = client;
 	}
 	public Object invoke(Object target, Method method, Object[] args) throws Throwable {
-		Consumer consumer = method.getDeclaringClass().getAnnotation(Consumer.class);
-		String appName = consumer.appName();
-		String serviceName = consumer.serviceName();
-		if(StringUtils.isEmpty(serviceName)){
-			serviceName = method.getDeclaringClass().getSimpleName();
+		RpcResponse<?> response = null;
+		try{
+			Consumer consumer = method.getDeclaringClass().getAnnotation(Consumer.class);
+			String appName = consumer.appName();
+			String serviceName = consumer.serviceName();
+			if(StringUtils.isEmpty(serviceName)){
+				serviceName = method.getDeclaringClass().getSimpleName();
+			}
+			String methodName = method.getName();
+			RpcRequestBean request = new RpcRequestBean();
+			request.setApplicationName(appName);
+			request.setServiceName(serviceName);
+			request.setMethodName(methodName);
+			request.setParamValues(args);
+			request.setRequestId(UUID.randomUUID().toString());
+			long begin = System.currentTimeMillis();
+			response = client.call(request, new RpcTypeReference<RpcResponseBean<Object>>(method.getGenericReturnType()));
+			long end = System.currentTimeMillis();
+			log.debug("Call provider total spend time : {} ms", end-begin);
+			if(response == null){
+				throw new NullPointerException("Response is null.");
+			}
+			if(response.getStatus() != 200){
+				throw new ServerException(response.getMsg());
+			}
+			return response.getData();
+		}catch(Exception e){
+			log.error("Call remote service happend error.", e);
 		}
-		String methodName = method.getName();
-		RpcRequestBean request = new RpcRequestBean();
-		request.setApplicationName(appName);
-		request.setServiceName(serviceName);
-		request.setMethodName(methodName);
-		request.setParamValues(args);
-		request.setRequestId(UUID.randomUUID().toString());
-		long begin = System.currentTimeMillis();
-		RpcResponse<?> response = client.call(request, new RpcTypeReference<RpcResponseBean<Object>>(method.getGenericReturnType()));
-		long end = System.currentTimeMillis();
-		log.debug("Call provider total spend time : {} ms", end-begin);
-		if(response == null){
-			throw new NullPointerException("Response is null.");
-		}
-		if(response.getStatus() != 200){
-			throw new ServerException(response.getMsg());
-		}
-		return response.getData();
+		return null;
 	}
 }

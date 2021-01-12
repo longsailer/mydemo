@@ -8,7 +8,6 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 
 /**
  * ApplicationContextUtil.java
@@ -30,7 +29,6 @@ public class ApplicationContextAutoWared implements ApplicationContextAware, Bea
 		context.setApplicationContext(applicationContext);
 		context.setApplicationName(applicationName);
 		context.setPort(port);
-		System.out.println("ok");
 	}
 	
 	@Bean

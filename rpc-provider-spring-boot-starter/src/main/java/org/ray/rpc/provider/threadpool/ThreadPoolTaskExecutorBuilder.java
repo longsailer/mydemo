@@ -18,8 +18,9 @@ public class ThreadPoolTaskExecutorBuilder {
 
 	private int corePoolSize = 30;
 	private int maxPoolSize = 50;
-	private int queueCapacity = 50;
+	private int queueCapacity = Integer.MAX_VALUE;
 	private int keepAliveSeconds = 60;
+	private boolean initialize = false;
 
 	public static ThreadPoolTaskExecutorBuilder build() {
 		return ttBuilder;
@@ -30,13 +31,16 @@ public class ThreadPoolTaskExecutorBuilder {
 	}
 
 	public ThreadPoolTaskExecutor definedPool(int corePoolSize, int maxPoolSize, int queueCapacity, int keepAliveSeconds, String threadNamePrefix) {
-		executor.setCorePoolSize(corePoolSize);
-		executor.setMaxPoolSize(maxPoolSize);
-		executor.setQueueCapacity(queueCapacity);
-		executor.setThreadNamePrefix(threadNamePrefix);
-		executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
-		executor.setKeepAliveSeconds(keepAliveSeconds);
-		executor.initialize();
+		if(!initialize && !"defaultThreadPool_".equals(executor.getThreadNamePrefix())){
+			initialize = true;
+			executor.setCorePoolSize(corePoolSize);
+			executor.setMaxPoolSize(maxPoolSize);
+			executor.setQueueCapacity(queueCapacity);
+			executor.setThreadNamePrefix(threadNamePrefix);
+			executor.setRejectedExecutionHandler(new ThreadPoolExecutor.DiscardOldestPolicy());
+			executor.setKeepAliveSeconds(keepAliveSeconds);
+			executor.initialize();
+		}
 		return executor;
 	}
 }

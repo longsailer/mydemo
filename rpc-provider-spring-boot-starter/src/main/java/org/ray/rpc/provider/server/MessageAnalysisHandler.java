@@ -45,6 +45,8 @@ public class MessageAnalysisHandler extends ChannelInboundHandlerAdapter {
 		} catch (JsonProcessingException e) {
 			log.error("调用协议数据格式不正确", e);
 			replyByError(ctx);
+		} finally {
+			in.release();
 		}
     }
 
@@ -61,6 +63,7 @@ public class MessageAnalysisHandler extends ChannelInboundHandlerAdapter {
 			resJson = JsonUtils.clazzToJson(response);
 			ByteBuf result = Unpooled.copiedBuffer(resJson, CharsetUtil.UTF_8);
 			ctx.writeAndFlush(result).addListener(ChannelFutureListener.CLOSE);
+			result.release();
 		} catch (JsonProcessingException e) {
 			log.error("响应调用方时失败", e);
 		} finally {
